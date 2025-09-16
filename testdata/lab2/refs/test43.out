@@ -1,0 +1,11 @@
+       LET    3:1    
+       VAR    4:2    
+        ID    4:6     a
+    ASSIGN    4:8    
+    LPAREN    4:11   
+    RPAREN    4:12   
+        IN    5:1    
+        ID    6:2     a
+      PLUS    6:4    
+       INT    6:6     3
+       END    7:1    

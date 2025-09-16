@@ -1,0 +1,12 @@
+       FOR    2:1    
+        ID    2:5     i
+    ASSIGN    2:6    
+       INT    2:8     10
+        TO    2:11   
+    STRING    2:14     
+        DO    2:18   
+        ID    3:2     i
+    ASSIGN    3:4    
+        ID    3:7     i
+     MINUS    3:9    
+       INT    3:11    1

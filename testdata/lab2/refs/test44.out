@@ -1,0 +1,24 @@
+       LET    2:1    
+      TYPE    4:2    
+        ID    4:7     rectype
+        EQ    4:15   
+    LBRACE    4:17   
+        ID    4:18    name
+     COLON    4:22   
+        ID    4:23    string
+     COMMA    4:29   
+        ID    4:31    id
+     COLON    4:33   
+        ID    4:34    int
+    RBRACE    4:37   
+       VAR    5:2    
+        ID    5:6     b
+     COLON    5:7    
+        ID    5:8     rectype
+    ASSIGN    5:16   
+       NIL    5:19   
+        IN    7:1    
+        ID    9:2     b
+    ASSIGN    9:4    
+       NIL    9:7    
+       END   11:1    

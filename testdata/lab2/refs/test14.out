@@ -1,0 +1,51 @@
+       LET    3:1    
+      TYPE    5:2    
+        ID    5:7     arrtype
+        EQ    5:15   
+     ARRAY    5:17   
+        OF    5:23   
+        ID    5:26    int
+      TYPE    6:2    
+        ID    6:7     rectype
+        EQ    6:15   
+    LBRACE    6:17   
+        ID    6:18    name
+     COLON    6:22   
+        ID    6:23    string
+     COMMA    6:29   
+        ID    6:31    id
+     COLON    6:33   
+        ID    6:35    int
+    RBRACE    6:38   
+       VAR    8:2    
+        ID    8:6     rec
+    ASSIGN    8:10   
+        ID    8:13    rectype
+    LBRACE    8:21   
+        ID    8:22    name
+        EQ    8:26   
+    STRING    8:27    aname
+     COMMA    8:34   
+        ID    8:36    id
+        EQ    8:38   
+       INT    8:39    0
+    RBRACE    8:40   
+       VAR    9:2    
+        ID    9:6     arr
+    ASSIGN    9:10   
+        ID    9:13    arrtype
+    LBRACK    9:21   
+       INT    9:22    3
+    RBRACK    9:23   
+        OF    9:25   
+       INT    9:28    0
+        IN   11:1    
+        IF   12:2    
+        ID   12:5     rec
+       NEQ   12:9    
+        ID   12:12    arr
+      THEN   12:16   
+       INT   12:21    3
+      ELSE   12:23   
+       INT   12:28    4
+       END   13:1    

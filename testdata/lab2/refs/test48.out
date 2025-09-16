@@ -1,0 +1,30 @@
+       LET    5:1    
+  FUNCTION    6:2    
+        ID    6:11    g
+    LPAREN    6:12   
+        ID    6:13    a
+     COLON    6:14   
+        ID    6:15    int
+    RPAREN    6:18   
+     COLON    6:19   
+        ID    6:20    int
+        EQ    6:24   
+        ID    6:26    a
+      TYPE    7:2    
+        ID    7:7     t
+        EQ    7:9    
+        ID    7:11    int
+  FUNCTION    8:2    
+        ID    8:11    g
+    LPAREN    8:12   
+        ID    8:13    a
+     COLON    8:14   
+        ID    8:15    int
+    RPAREN    8:18   
+     COLON    8:19   
+        ID    8:20    int
+        EQ    8:24   
+        ID    8:26    a
+        IN    9:1    
+       INT   10:2     0
+       END   11:1    

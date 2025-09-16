@@ -1,0 +1,10 @@
+       LET    2:1    
+       VAR    3:2    
+        ID    3:6     d
+    ASSIGN    3:7    
+       INT    3:9     0
+        IN    4:1    
+        ID    5:2     d
+       DOT    5:3    
+        ID    5:4     f
+       END    6:1    

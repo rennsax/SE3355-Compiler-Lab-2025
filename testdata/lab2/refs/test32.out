@@ -1,0 +1,19 @@
+       LET    3:1    
+      TYPE    4:2    
+        ID    4:7     arrayty
+        EQ    4:15   
+     ARRAY    4:17   
+        OF    4:23   
+        ID    4:26    int
+       VAR    6:2    
+        ID    6:6     a
+    ASSIGN    6:8    
+        ID    6:11    arrayty
+    LBRACK    6:19   
+       INT    6:20    10
+    RBRACK    6:22   
+        OF    6:24   
+    STRING    6:27     
+        IN    7:1    
+       INT    8:2     0
+       END    9:1    

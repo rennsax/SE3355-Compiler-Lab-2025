@@ -1,0 +1,11 @@
+       LET    2:1    
+       VAR    3:2    
+        ID    3:6     d
+    ASSIGN    3:7    
+       INT    3:9     0
+        IN    4:1    
+        ID    5:2     d
+    LBRACK    5:3    
+       INT    5:4     3
+    RBRACK    5:5    
+       END    6:1    

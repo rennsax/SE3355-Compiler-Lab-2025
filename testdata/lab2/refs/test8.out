@@ -1,0 +1,10 @@
+        IF    2:1    
+    LPAREN    2:4    
+       INT    2:5     10
+        GT    2:8    
+       INT    2:10    20
+    RPAREN    2:12   
+      THEN    2:14   
+       INT    2:19    30
+      ELSE    2:22   
+       INT    2:27    40

@@ -1,0 +1,15 @@
+       LET    2:1    
+      TYPE    3:2    
+        ID    3:7     a
+        EQ    3:9    
+        ID    3:11    int
+        IN    4:1    
+       LET    5:2    
+      TYPE    6:3    
+        ID    6:8     a
+        EQ    6:10   
+        ID    6:12    string
+        IN    7:2    
+       INT    8:3     0
+       END    9:2    
+       END   10:1    

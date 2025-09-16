@@ -1,0 +1,10 @@
+       LET    2:1    
+       VAR    3:2    
+        ID    3:6     a
+     COLON    3:7    
+        ID    3:8     int
+    ASSIGN    3:12   
+    STRING    3:15     
+        IN    4:1    
+        ID    5:2     a
+       END    6:1    

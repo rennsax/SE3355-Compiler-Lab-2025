@@ -1,0 +1,55 @@
+       LET    2:1    
+      TYPE    4:1    
+        ID    4:6     intlist
+        EQ    4:14   
+    LBRACE    4:16   
+        ID    4:17    hd
+     COLON    4:19   
+        ID    4:21    int
+     COMMA    4:24   
+        ID    4:26    tl
+     COLON    4:28   
+        ID    4:30    intlist
+    RBRACE    4:37   
+      TYPE    7:1    
+        ID    7:6     tree
+        EQ    7:11   
+    LBRACE    7:12   
+        ID    7:13    key
+     COLON    7:16   
+        ID    7:18    int
+     COMMA    7:21   
+        ID    7:23    children
+     COLON    7:31   
+        ID    7:33    treelist
+    RBRACE    7:41   
+      TYPE    8:1    
+        ID    8:6     treelist
+        EQ    8:15   
+    LBRACE    8:17   
+        ID    8:18    hd
+     COLON    8:20   
+        ID    8:22    tree
+     COMMA    8:26   
+        ID    8:28    tl
+     COLON    8:30   
+        ID    8:32    treelist
+    RBRACE    8:40   
+       VAR   10:1    
+        ID   10:5     lis
+     COLON   10:8    
+        ID   10:9     intlist
+    ASSIGN   10:17   
+        ID   10:20    intlist
+    LBRACE   10:28   
+        ID   10:30    hd
+        EQ   10:32   
+       INT   10:33    0
+     COMMA   10:34   
+        ID   10:36    tl
+        EQ   10:38   
+       NIL   10:40   
+    RBRACE   10:44   
+        IN   12:1    
+        ID   13:2     lis
+       END   14:1    

@@ -1,0 +1,200 @@
+       LET    2:1    
+      TYPE    4:1    
+        ID    4:6     arrtype1
+        EQ    4:15   
+     ARRAY    4:17   
+        OF    4:23   
+        ID    4:26    int
+      TYPE    5:1    
+        ID    5:6     rectype1
+        EQ    5:15   
+    LBRACE    5:17   
+        ID    5:18    name
+     COLON    5:22   
+        ID    5:23    string
+     COMMA    5:29   
+        ID    5:31    address
+     COLON    5:38   
+        ID    5:39    string
+     COMMA    5:45   
+        ID    5:47    id
+     COLON    5:49   
+        ID    5:51    int
+     COMMA    5:55   
+        ID    5:57    age
+     COLON    5:60   
+        ID    5:62    int
+    RBRACE    5:65   
+      TYPE    6:1    
+        ID    6:6     arrtype2
+        EQ    6:15   
+     ARRAY    6:17   
+        OF    6:23   
+        ID    6:26    rectype1
+      TYPE    7:1    
+        ID    7:6     rectype2
+        EQ    7:15   
+    LBRACE    7:17   
+        ID    7:18    name
+     COLON    7:23   
+        ID    7:25    string
+     COMMA    7:31   
+        ID    7:33    dates
+     COLON    7:38   
+        ID    7:40    arrtype1
+    RBRACE    7:48   
+      TYPE    9:1    
+        ID    9:6     arrtype3
+        EQ    9:15   
+     ARRAY    9:17   
+        OF    9:23   
+        ID    9:26    string
+       VAR   11:1    
+        ID   11:5     arr1
+    ASSIGN   11:10   
+        ID   11:13    arrtype1
+    LBRACK   11:22   
+       INT   11:23    10
+    RBRACK   11:25   
+        OF   11:27   
+       INT   11:30    0
+       VAR   12:1    
+        ID   12:5     arr2
+    ASSIGN   12:11   
+        ID   12:14    arrtype2
+    LBRACK   12:23   
+       INT   12:24    5
+    RBRACK   12:25   
+        OF   12:27   
+        ID   12:30    rectype1
+    LBRACE   12:39   
+        ID   12:40    name
+        EQ   12:44   
+    STRING   12:45    aname
+     COMMA   12:52   
+        ID   12:54    address
+        EQ   12:61   
+    STRING   12:62    somewhere
+     COMMA   12:73   
+        ID   12:75    id
+        EQ   12:77   
+       INT   12:78    0
+     COMMA   12:79   
+        ID   12:81    age
+        EQ   12:84   
+       INT   12:85    0
+    RBRACE   12:86   
+       VAR   13:1    
+        ID   13:5     arr3
+     COLON   13:9    
+        ID   13:10    arrtype3
+    ASSIGN   13:19   
+        ID   13:22    arrtype3
+    LBRACK   13:31   
+       INT   13:32    100
+    RBRACK   13:35   
+        OF   13:37   
+    STRING   13:40    (null)
+       VAR   15:1    
+        ID   15:5     rec1
+    ASSIGN   15:10   
+        ID   15:13    rectype1
+    LBRACE   15:22   
+        ID   15:23    name
+        EQ   15:27   
+    STRING   15:28    Kapoios
+     COMMA   15:37   
+        ID   15:39    address
+        EQ   15:46   
+    STRING   15:47    Kapou
+     COMMA   15:54   
+        ID   15:56    id
+        EQ   15:58   
+       INT   15:59    2432
+     COMMA   15:64   
+        ID   15:66    age
+        EQ   15:69   
+       INT   15:70    44
+    RBRACE   15:72   
+       VAR   16:1    
+        ID   16:5     rec2
+    ASSIGN   16:10   
+        ID   16:13    rectype2
+    LBRACE   16:22   
+        ID   16:23    name
+        EQ   16:27   
+    STRING   16:28    Allos
+     COMMA   16:35   
+        ID   16:37    dates
+        EQ   16:42   
+        ID   16:44    arrtype1
+    LBRACK   16:53   
+       INT   16:54    3
+    RBRACK   16:55   
+        OF   16:57   
+       INT   16:60    1900
+    RBRACE   16:64   
+        IN   18:1    
+        ID   20:1     arr1
+    LBRACK   20:5    
+       INT   20:6     0
+    RBRACK   20:7    
+    ASSIGN   20:9    
+       INT   20:12    1
+ SEMICOLON   20:13   
+        ID   21:1     arr1
+    LBRACK   21:5    
+       INT   21:6     9
+    RBRACK   21:7    
+    ASSIGN   21:9    
+       INT   21:12    3
+ SEMICOLON   21:13   
+        ID   22:1     arr2
+    LBRACK   22:5    
+       INT   22:6     3
+    RBRACK   22:7    
+       DOT   22:8    
+        ID   22:9     name
+    ASSIGN   22:14   
+    STRING   22:17    kati
+ SEMICOLON   22:23   
+        ID   23:1     arr2
+    LBRACK   23:5    
+       INT   23:6     1
+    RBRACK   23:7    
+       DOT   23:8    
+        ID   23:9     age
+    ASSIGN   23:13   
+       INT   23:16    23
+ SEMICOLON   23:18   
+        ID   24:1     arr3
+    LBRACK   24:5    
+       INT   24:6     34
+    RBRACK   24:8    
+    ASSIGN   24:10   
+    STRING   24:13    sfd
+ SEMICOLON   24:18   
+        ID   26:1     rec1
+       DOT   26:5    
+        ID   26:6     name
+    ASSIGN   26:11   
+    STRING   26:14    sdf
+ SEMICOLON   26:19   
+        ID   27:1     rec2
+       DOT   27:5    
+        ID   27:6     dates
+    LBRACK   27:11   
+       INT   27:12    0
+    RBRACK   27:13   
+    ASSIGN   27:15   
+       INT   27:18    2323
+ SEMICOLON   27:22   
+        ID   28:1     rec2
+       DOT   28:5    
+        ID   28:6     dates
+    LBRACK   28:11   
+       INT   28:12    2
+    RBRACK   28:13   
+    ASSIGN   28:15   
+       INT   28:18    2323
+       END   30:1    

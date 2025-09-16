@@ -1,0 +1,239 @@
+       LET    3:1    
+       VAR    4:5    
+        ID    4:9     N
+    ASSIGN    4:11   
+       INT    4:14    8
+      TYPE    6:5    
+        ID    6:10    intArray
+        EQ    6:19   
+     ARRAY    6:21   
+        OF    6:27   
+        ID    6:30    int
+       VAR    8:5    
+        ID    8:9     row
+    ASSIGN    8:13   
+        ID    8:16    intArray
+    LBRACK    8:25   
+        ID    8:27    N
+    RBRACK    8:29   
+        OF    8:31   
+       INT    8:34    0
+       VAR    9:5    
+        ID    9:9     col
+    ASSIGN    9:13   
+        ID    9:16    intArray
+    LBRACK    9:25   
+        ID    9:27    N
+    RBRACK    9:29   
+        OF    9:31   
+       INT    9:34    0
+       VAR   10:5    
+        ID   10:9     diag1
+    ASSIGN   10:15   
+        ID   10:18    intArray
+    LBRACK   10:27   
+        ID   10:28    N
+      PLUS   10:29   
+        ID   10:30    N
+     MINUS   10:31   
+       INT   10:32    1
+    RBRACK   10:33   
+        OF   10:35   
+       INT   10:38    0
+       VAR   11:5    
+        ID   11:9     diag2
+    ASSIGN   11:15   
+        ID   11:18    intArray
+    LBRACK   11:27   
+        ID   11:28    N
+      PLUS   11:29   
+        ID   11:30    N
+     MINUS   11:31   
+       INT   11:32    1
+    RBRACK   11:33   
+        OF   11:35   
+       INT   11:38    0
+  FUNCTION   13:5    
+        ID   13:14    printboard
+    LPAREN   13:24   
+    RPAREN   13:25   
+        EQ   13:27   
+    LPAREN   14:8    
+       FOR   14:9    
+        ID   14:13    i
+    ASSIGN   14:15   
+       INT   14:18    0
+        TO   14:20   
+        ID   14:23    N
+     MINUS   14:24   
+       INT   14:25    1
+        DO   15:3    
+    LPAREN   15:6    
+       FOR   15:7    
+        ID   15:11    j
+    ASSIGN   15:13   
+       INT   15:16    0
+        TO   15:18   
+        ID   15:21    N
+     MINUS   15:22   
+       INT   15:23    1
+        DO   16:8    
+        ID   16:11    print
+    LPAREN   16:16   
+        IF   16:17   
+        ID   16:20    col
+    LBRACK   16:23   
+        ID   16:24    i
+    RBRACK   16:25   
+        EQ   16:26   
+        ID   16:27    j
+      THEN   16:29   
+    STRING   16:34     O
+      ELSE   16:39   
+    STRING   16:44     .
+    RPAREN   16:48   
+ SEMICOLON   16:49   
+        ID   17:7     print
+    LPAREN   17:12   
+    STRING   17:13    
+
+    RPAREN   17:17   
+    RPAREN   17:18   
+ SEMICOLON   17:19   
+        ID   18:10    print
+    LPAREN   18:15   
+    STRING   18:16    
+
+    RPAREN   18:20   
+    RPAREN   18:21   
+  FUNCTION   20:5    
+        ID   20:14    try
+    LPAREN   20:17   
+        ID   20:18    c
+     COLON   20:19   
+        ID   20:20    int
+    RPAREN   20:23   
+        EQ   20:25   
+    LPAREN   21:1    
+        IF   22:6    
+        ID   22:9     c
+        EQ   22:10   
+        ID   22:11    N
+      THEN   23:6    
+        ID   23:11    printboard
+    LPAREN   23:21   
+    RPAREN   23:22   
+      ELSE   24:6    
+       FOR   24:11   
+        ID   24:15    r
+    ASSIGN   24:17   
+       INT   24:20    0
+        TO   24:22   
+        ID   24:25    N
+     MINUS   24:26   
+       INT   24:27    1
+        DO   25:5    
+        IF   25:8    
+        ID   25:11    row
+    LBRACK   25:14   
+        ID   25:15    r
+    RBRACK   25:16   
+        EQ   25:17   
+       INT   25:18    0
+       AND   25:20   
+        ID   25:22    diag1
+    LBRACK   25:27   
+        ID   25:28    r
+      PLUS   25:29   
+        ID   25:30    c
+    RBRACK   25:31   
+        EQ   25:32   
+       INT   25:33    0
+       AND   25:35   
+        ID   25:37    diag2
+    LBRACK   25:42   
+        ID   25:43    r
+      PLUS   25:44   
+       INT   25:45    7
+     MINUS   25:46   
+        ID   25:47    c
+    RBRACK   25:48   
+        EQ   25:49   
+       INT   25:50    0
+      THEN   26:13   
+    LPAREN   26:18   
+        ID   26:19    row
+    LBRACK   26:22   
+        ID   26:23    r
+    RBRACK   26:24   
+    ASSIGN   26:25   
+       INT   26:27    1
+ SEMICOLON   26:28   
+        ID   26:30    diag1
+    LBRACK   26:35   
+        ID   26:36    r
+      PLUS   26:37   
+        ID   26:38    c
+    RBRACK   26:39   
+    ASSIGN   26:40   
+       INT   26:42    1
+ SEMICOLON   26:43   
+        ID   26:45    diag2
+    LBRACK   26:50   
+        ID   26:51    r
+      PLUS   26:52   
+       INT   26:53    7
+     MINUS   26:54   
+        ID   26:55    c
+    RBRACK   26:56   
+    ASSIGN   26:57   
+       INT   26:59    1
+ SEMICOLON   26:60   
+        ID   27:12    col
+    LBRACK   27:15   
+        ID   27:16    c
+    RBRACK   27:17   
+    ASSIGN   27:18   
+        ID   27:20    r
+ SEMICOLON   27:21   
+        ID   28:19    try
+    LPAREN   28:22   
+        ID   28:23    c
+      PLUS   28:24   
+       INT   28:25    1
+    RPAREN   28:26   
+ SEMICOLON   28:27   
+        ID   29:5     row
+    LBRACK   29:8    
+        ID   29:9     r
+    RBRACK   29:10   
+    ASSIGN   29:11   
+       INT   29:13    0
+ SEMICOLON   29:14   
+        ID   29:16    diag1
+    LBRACK   29:21   
+        ID   29:22    r
+      PLUS   29:23   
+        ID   29:24    c
+    RBRACK   29:25   
+    ASSIGN   29:26   
+       INT   29:28    0
+ SEMICOLON   29:29   
+        ID   29:31    diag2
+    LBRACK   29:36   
+        ID   29:37    r
+      PLUS   29:38   
+       INT   29:39    7
+     MINUS   29:40   
+        ID   29:41    c
+    RBRACK   29:42   
+    ASSIGN   29:43   
+       INT   29:45    0
+    RPAREN   29:46   
+    RPAREN   31:1    
+        IN   32:2    
+        ID   32:5     try
+    LPAREN   32:8    
+       INT   32:9     0
+    RPAREN   32:10   
+       END   33:1    

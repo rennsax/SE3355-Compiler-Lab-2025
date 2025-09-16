@@ -1,0 +1,10 @@
+     WHILE    2:1    
+    LPAREN    2:6    
+       INT    2:7     10
+        GT    2:10   
+       INT    2:12    5
+    RPAREN    2:13   
+        DO    2:15   
+       INT    2:18    5
+      PLUS    2:19   
+       INT    2:20    6

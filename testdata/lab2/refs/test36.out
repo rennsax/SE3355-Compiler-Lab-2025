@@ -1,0 +1,26 @@
+       LET    2:1    
+  FUNCTION    3:2    
+        ID    3:11    g
+    LPAREN    3:13   
+        ID    3:14    a
+     COLON    3:15   
+        ID    3:16    int
+     COMMA    3:20   
+        ID    3:22    b
+     COLON    3:23   
+        ID    3:24    string
+    RPAREN    3:30   
+     COLON    3:31   
+        ID    3:32    int
+        EQ    3:36   
+        ID    3:38    a
+        IN    4:1    
+        ID    5:2     g
+    LPAREN    5:3    
+       INT    5:4     3
+     COMMA    5:5    
+    STRING    5:6     one
+     COMMA    5:11   
+       INT    5:12    5
+    RPAREN    5:13   
+       END    6:1    

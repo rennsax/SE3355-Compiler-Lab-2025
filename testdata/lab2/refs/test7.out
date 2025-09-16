@@ -1,0 +1,53 @@
+       LET    2:1    
+  FUNCTION    4:1    
+        ID    4:10    do_nothing1
+    LPAREN    4:21   
+        ID    4:22    a
+     COLON    4:23   
+        ID    4:25    int
+     COMMA    4:28   
+        ID    4:30    b
+     COLON    4:31   
+        ID    4:33    string
+    RPAREN    4:39   
+     COLON    4:40   
+        ID    4:41    int
+        EQ    4:44   
+    LPAREN    5:3    
+        ID    5:4     do_nothing2
+    LPAREN    5:15   
+        ID    5:16    a
+      PLUS    5:17   
+       INT    5:18    1
+    RPAREN    5:19   
+ SEMICOLON    5:20   
+       INT    5:21    0
+    RPAREN    5:22   
+  FUNCTION    7:1    
+        ID    7:10    do_nothing2
+    LPAREN    7:21   
+        ID    7:22    d
+     COLON    7:23   
+        ID    7:25    int
+    RPAREN    7:28   
+     COLON    7:29   
+        ID    7:30    string
+        EQ    7:37   
+    LPAREN    8:3    
+        ID    8:4     do_nothing1
+    LPAREN    8:15   
+        ID    8:16    d
+     COMMA    8:17   
+    STRING    8:19    str
+    RPAREN    8:24   
+ SEMICOLON    8:25   
+    STRING    8:26     
+    RPAREN    8:29   
+        IN   10:1    
+        ID   11:2     do_nothing1
+    LPAREN   11:13   
+       INT   11:14    0
+     COMMA   11:15   
+    STRING   11:17    str2
+    RPAREN   11:23   
+       END   12:1    
