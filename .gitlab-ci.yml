@@ -1,0 +1,8 @@
+test_lab1:
+  image: ipadsse302/tigerlabs_env:2025
+  stage: test
+  tags:
+    - tiger-compiler
+  script:
+    - git checkout b3526b9 -- testdata/ scripts/
+    - make gradelab1
