@@ -10,3 +10,6 @@ set(CMAKE_CXX_STANDARD 17)
 
 # lab 1
 add_subdirectory(src/straightline)
+
+# lab 2-6
+add_subdirectory(src/tiger)

@@ -17,12 +17,10 @@ check-image:
 
 
 docker-run: check-image
-	docker run -it --privileged --platform linux/amd64 \
-    	-v $(shell pwd):/tiger-compiler $(IMAGE_NAME_FULL)
+	docker run -it --privileged --platform linux/amd64 -v $(shell pwd):/tiger-compiler $(IMAGE_NAME_FULL)
 
 docker-run-backend: check-image
-	docker run -dt --privileged --platform linux/amd64 \
-    	-v $(shell pwd):/tiger-compiler $(IMAGE_NAME_FULL)
+	docker run -dt --privileged --platform linux/amd64 -v $(shell pwd):/tiger-compiler $(IMAGE_NAME_FULL)
 
 transform:
 	find src scripts testdata -type f | xargs -I % sh -c 'dos2unix -n % /tmp/tmp; mv -f /tmp/tmp % || true;'
