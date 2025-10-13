@@ -112,14 +112,14 @@
 %start program
 
 
- /*
-  * Put your codes here (lab3).
-  */
+ /* TODO: write more derivations here (lab3). */
 
 %%
 program: exp { drv.parse_result = new absyn::AbsynTree($1); }
 
 exp: NIL  { $$ = new absyn::NilExp(@$); }
+
+ /* End of TODO */
 
 %%
  /* User-supplied error report interface */

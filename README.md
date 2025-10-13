@@ -1,3 +1,3 @@
-# Lab 2: Lexer
+# Lab 3: Parser
 
-See [Lab 2: Lexer](https://ipads.se.sjtu.edu.cn/courses/compilers/labs/Lexer.html) for details.
+See [Lab 3: Parser](https://ipads.se.sjtu.edu.cn/courses/compilers/labs/Parser.html) for details.

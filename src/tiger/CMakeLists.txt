@@ -24,3 +24,12 @@ add_executable(test_lex main/test_lex.cc
   ${FLEX_Scanner_OUTPUTS})
 target_compile_definitions(test_lex PUBLIC TIGER_NO_BACKEND)
 set_target_properties(test_lex PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
+
+# lab 3
+add_executable(test_parse main/test_parse.cc
+  symbol/symbol.cc
+  absyn/absyn.cc
+  ${BISON_Parser_OUTPUTS}
+  ${FLEX_Scanner_OUTPUTS})
+target_compile_definitions(test_parse PUBLIC TIGER_NO_BACKEND)
+set_target_properties(test_parse PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})

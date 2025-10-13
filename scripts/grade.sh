@@ -102,7 +102,7 @@ test_lab3() {
     else
       # Positive testcases
       if [[ $res_run != 0 ]]; then
-        error_printf "Error: This testcase should not incur syntax error [$testcase_name]"
+        error_printf "Error: This testcase should not incur syntax error [$testcase_name]\n"
         output_score 3 0
         exit 1
       fi
