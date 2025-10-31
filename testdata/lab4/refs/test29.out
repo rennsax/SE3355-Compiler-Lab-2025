@@ -1,1 +1,1 @@
-test29.tig:8.1:type mismatch
+./testdata/lab4/testcases/test29.tig:7.2-41: type and init type mismatch

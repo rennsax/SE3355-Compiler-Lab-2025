@@ -1,1 +1,1 @@
-test35.tig:5.8:para type mismatch
+./testdata/lab4/testcases/test35.tig:5.4-8: param length mismatch in function g

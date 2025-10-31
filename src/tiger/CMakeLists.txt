@@ -14,6 +14,18 @@ add_flex_bison_dependency(Scanner Parser)
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR}/frontend)
 
+# Find LLVM library
+find_package(LLVM REQUIRED CONFIG)
+
+message(STATUS "Found LLVM ${LLVM_PACKAGE_VERSION}")
+message(STATUS "Using LLVMConfig.cmake in: ${LLVM_DIR}")
+
+include_directories(${LLVM_INCLUDE_DIRS})
+separate_arguments(LLVM_DEFINITIONS_LIST NATIVE_COMMAND ${LLVM_DEFINITIONS})
+add_definitions(${LLVM_DEFINITIONS_LIST})
+
+llvm_map_components_to_libnames(llvm_libs support core irreader)
+
 include_directories(${PROJECT_SOURCE_DIR}/src)
 
 # lab 2
@@ -33,3 +45,14 @@ add_executable(test_parse main/test_parse.cc
   ${FLEX_Scanner_OUTPUTS})
 target_compile_definitions(test_parse PUBLIC TIGER_NO_BACKEND)
 set_target_properties(test_parse PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
+
+add_executable(test_semant main/test_semant.cc
+  symbol/symbol.cc
+  absyn/absyn.cc
+  env/env.cc
+  semant/types.cc
+  semant/semant.cc
+  ${BISON_Parser_OUTPUTS}
+  ${FLEX_Scanner_OUTPUTS})
+target_link_libraries(test_semant ${llvm_libs})
+set_target_properties(test_semant PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})

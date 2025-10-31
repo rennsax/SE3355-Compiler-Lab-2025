@@ -134,14 +134,14 @@ test_lab4() {
     ./test_semant "$testcase" >&/tmp/output.txt
 
     # Only check the error message part
-    awk -F: '{print $3}' "$ref" >/tmp/ref.txt
-    grep -Fof /tmp/ref.txt /tmp/output.txt >&/tmp/output_sel.txt
-    diff -w -B /tmp/output_sel.txt /tmp/ref.txt
-    if [[ $? != 0 ]]; then
-      error_printf "Error: Output mismatch [$testcase_name]\n"
-      output_score 4 0
-      exit 1
-    fi
+    awk -F: '{ print substr($3, 2) }' "$ref" >/tmp/ref.txt
+    while IFS= read -r line; do
+      if ! grep -Fq -- "$line" /tmp/output.txt; then
+        error_printf "[$testcase_name] Error: output not found \`%s'\n" "$line"
+        output_score 4 0
+        exit 1
+      fi
+    done </tmp/ref.txt
   done
 
   output_score 4 100

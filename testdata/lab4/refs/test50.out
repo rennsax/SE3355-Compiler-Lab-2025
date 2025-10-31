@@ -1,1 +1,1 @@
-test50.tig:8.4: break is not inside any loop
+./testdata/lab4/testcases/test50.tig:8.4-8: break is not inside any loop

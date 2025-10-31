@@ -33,7 +33,7 @@ public:
   /// Symbol kinds.
   using SKind = yy::parser::symbol_kind;
 
-  TigerFrontendDriver(std::string_view f, err::ErrorMsg &errmsg) : file(f), parse_result(nullptr), errormsg(errmsg) { }
+  TigerFrontendDriver(std::string_view f, err::ErrorMsg &errmsg) : file(new std::string{f}), parse_result(nullptr), errormsg(errmsg) { }
 
   /**
    * Auxiliary methods for initializing/cleanup states before and after @c yylex
@@ -73,7 +73,7 @@ public:
   /// The location of the current token. Used by the scanner.
   yy::location location;
   /// The scanned/parsed file. "-" refers to standard input.
-  const std::string file;
+  const std::string *file; // FIXME: memory leak
   /// The root of the whole AST.
   absyn::AbsynTree *parse_result;
 

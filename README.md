@@ -1,3 +1,3 @@
-# Lab 3: Parser
+# Lab 4: Type Checking
 
-See [Lab 3: Parser](https://ipads.se.sjtu.edu.cn/courses/compilers/labs/Parser.html) for details.
+See [Lab 4: Type Checking](https://ipads.se.sjtu.edu.cn/courses/compilers/labs/Type_Checking.html) for details.
