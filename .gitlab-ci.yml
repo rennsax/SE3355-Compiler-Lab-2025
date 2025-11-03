@@ -37,5 +37,5 @@ test_lab4:
     - tiger-compiler
   stage: test_lab4
   script:
-    - git checkout 3f75a7f -- testdata/ scripts/
+    - git checkout bcd6e83 -- testdata/ scripts/
     - make gradelab4
