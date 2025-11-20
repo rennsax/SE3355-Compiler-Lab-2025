@@ -1,8 +1,12 @@
+variables:
+  GIT_DEPTH: ""
+
 stages:
   - test_lab1
   - test_lab2
   - test_lab3
   - test_lab4
+  - test_lab5
 
 test_lab1:
   image: ipadsse302/tigerlabs_env:2025
@@ -39,3 +43,12 @@ test_lab4:
   script:
     - git checkout bcd6e83 -- testdata/ scripts/
     - make gradelab4
+
+test_lab5:
+  image: ipadsse302/tigerlabs_env:2025
+  tags:
+    - tiger-compiler
+  stage: test_lab5
+  script:
+    - git checkout bcd6e83 -- testdata/ scripts/
+    - make gradelab5-1

@@ -121,7 +121,6 @@ test_lab3() {
 }
 
 test_lab4() {
-  local score_str="LAB4 SCORE"
   local testcase_dir=${WORKDIR}/testdata/lab4/testcases
   local ref_dir=${WORKDIR}/testdata/lab4/refs
   local testcase_name
@@ -148,179 +147,24 @@ test_lab4() {
 }
 
 test_lab5_part1() {
-  local score_str="LAB5 part 1 SCORE"
   local testcase_dir=${WORKDIR}/testdata/lab5or6/testcases
-  local ref_dir=${WORKDIR}/testdata/lab5or6/refs
-  local mergecase_dir=$testcase_dir/merge
-  local mergeref_dir=$ref_dir/merge
-
+  local ref_dir=${WORKDIR}/testdata/lab5or6/refs-part1
   local testcase_name
-  local score=0
-  local full_score=1
 
-  build test_translate_llvm
+  build test_escape_analysis
   for testcase in "$testcase_dir"/*.tig; do
     testcase_name=$(basename "$testcase" | cut -f1 -d".")
     local ref=${ref_dir}/${testcase_name}.out
 
-    ./test_translate_llvm "$testcase" &> /dev/null
-    bash ${WORKDIR}/scripts/build_llvm.sh "${testcase}.ll"
-    if [[ $? != 0 ]]; then
-      echo "\e[31mError\e[0m: Link error [$testcase_name]"
-      full_score=0
-      continue
-    fi
+    ./test_escape_analysis "$testcase" >&/tmp/output.txt
 
-    if [[ $testcase_name == "merge" ]]; then
-      for mergecase in "$mergecase_dir"/*.in; do
-        mergecase_name=$(basename "$mergecase" | cut -f1 -d".")
-        local mergeref=${mergeref_dir}/${mergecase_name}.out
-        ./test_program <"$mergecase" >&/tmp/output.txt
-        diff -w -B /tmp/output.txt "$mergeref"
-        if [[ $? != 0 ]]; then
-          echo -e "\e[31mError\e[0m: Output mismatch [$testcase_name]"
-          full_score=0
-          continue
-        fi
-        score=$((score + 5))
-        echo -e "\e[34mPASS\e[0m: [$testcase_name/$mergecase_name]"
-      done
-    else
-      ./test_program >&/tmp/output.txt
-      diff -w -B /tmp/output.txt "$ref"
-      if [[ $? != 0 ]]; then
-        echo -e "\e[31mError\e[0m: Output mismatch [$testcase_name]"
-        full_score=0
-        continue
-      fi
-      echo -e "\e[34mPASS\e[0m: [$testcase_name]"
-      score=$((score + 5))
-    fi
-
-  done
-
-  if [[ $full_score == 0 ]]; then
-    echo "${score_str}: ${score}"
-  else
-    echo "[^_^]: Pass"
-    echo "${score_str}: 100"
-  fi
-}
-
-test_lab5() {
-  local score_str="LAB5 SCORE"
-  local main_script=${WORKDIR}/scripts/lab5_test/main.py
-  local testcase_dir=${WORKDIR}/testdata/lab5or6/testcases
-  local ref_dir=${WORKDIR}/testdata/lab5or6/refs
-  local mergecase_dir=$testcase_dir/merge
-  local mergeref_dir=$ref_dir/merge
-  local score=0
-  local full_score=1
-  local testcase_name
-  local mergecase_name
-
-  build test_codegen
-  for testcase in "$testcase_dir"/*.tig; do
-    testcase_name=$(basename "$testcase" | cut -f1 -d".")
-    local ref=${ref_dir}/${testcase_name}.out
-    local assem=$testcase.s
-    ./test_codegen "$testcase" >&/dev/null
-    if [[ $testcase_name == "merge" ]]; then
-      for mergecase in "$mergecase_dir"/*.in; do
-        mergecase_name=$(basename "$mergecase" | cut -f1 -d".")
-        local mergeref=${mergeref_dir}/${mergecase_name}.out
-        python3 ${main_script} ${assem} <"$mergecase" >&/tmp/output.txt
-        diff -w -B /tmp/output.txt "$mergeref"
-        if [[ $? != 0 ]]; then
-          echo "Error: Output mismatch [$testcase_name/$mergecase_name]"
-          full_score=0
-          continue
-        fi
-        score=$((score + 5))
-        echo "Pass $testcase_name/$mergecase_name"
-      done
-    else
-      python3 ${main_script} ${assem} >&/tmp/output.txt
-      diff -w -B /tmp/output.txt "$ref"
-      if [[ $? != 0 ]]; then
-        echo "Error: Output mismatch [$testcase_name]"
-        full_score=0
-        continue
-      fi
-      echo "Pass $testcase_name"
-      score=$((score + 5))
+    if ! diff /tmp/output.txt "${ref}"; then
+      error_printf "Fail to pass testcase \`%s'!\n" "$testcase_name"
+      output_score "5 (PART 1)" 0
+      exit 1
     fi
   done
-  rm -f "$testcase_dir"/*.tig.s
-
-  if [[ $full_score == 0 ]]; then
-    echo "${score_str}: ${score}"
-  else
-    echo "[^_^]: Pass"
-    echo "${score_str}: 100"
-  fi
-}
-
-test_lab6() {
-  local score_str="LAB6 SCORE"
-  local testcase_dir=${WORKDIR}/testdata/lab5or6/testcases
-  local ref_dir=${WORKDIR}/testdata/lab5or6/refs
-  local mergecase_dir=$testcase_dir/merge
-  local mergeref_dir=$ref_dir/merge
-  local runtime_path=${WORKDIR}/src/tiger/runtime/runtime.c
-  local score=0
-  local full_score=1
-  local testcase_name
-  local mergecase_name
-
-  build tiger-compiler
-  for testcase in "$testcase_dir"/*.tig; do
-    testcase_name=$(basename "$testcase" | cut -f1 -d".")
-    local ref=${ref_dir}/${testcase_name}.out
-    local assem=$testcase.s
-
-    ./tiger-compiler "$testcase" &>/dev/null
-    gcc -Wl,--wrap,getchar -m64 "$assem" "$runtime_path" -o test.out &>/dev/null
-    if [ ! -s test.out ]; then
-      echo "Error: Link error [$testcase_name]"
-      full_score=0
-      continue
-    fi
-
-    if [[ $testcase_name == "merge" ]]; then
-      for mergecase in "$mergecase_dir"/*.in; do
-        mergecase_name=$(basename "$mergecase" | cut -f1 -d".")
-        local mergeref=${mergeref_dir}/${mergecase_name}.out
-        ./test.out <"$mergecase" >&/tmp/output.txt
-        diff -w -B /tmp/output.txt "$mergeref"
-        if [[ $? != 0 ]]; then
-          echo "Error: Output mismatch [$testcase_name/$mergecase_name]"
-          full_score=0
-          continue
-        fi
-        score=$((score + 5))
-        echo "Pass $testcase_name/$mergecase_name"
-      done
-    else
-      ./test.out >&/tmp/output.txt
-      diff -w -B /tmp/output.txt "$ref"
-      if [[ $? != 0 ]]; then
-        echo "Error: Output mismatch [$testcase_name]"
-        full_score=0
-        continue
-      fi
-      echo "Pass $testcase_name"
-      score=$((score + 5))
-    fi
-  done
-  rm -f "$testcase_dir"/*.tig.s
-
-  if [[ $full_score == 0 ]]; then
-    echo "${score_str}: ${score}"
-  else
-    echo "[^_^]: Pass"
-    echo "${score_str}: 100"
-  fi
+  output_score "5 (PART 1)" 100
 }
 
 main() {

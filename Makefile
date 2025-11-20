@@ -32,32 +32,25 @@ build-debug:
 	mkdir -p build && cd build && cmake -DCMAKE_BUILD_TYPE=Debug .. && make
 
 gradelab1:
-	bash scripts/grade.sh lab1
+	@bash scripts/grade.sh lab1
 
 gradelab2:
-	bash scripts/grade.sh lab2
+	@bash scripts/grade.sh lab2
 
 gradelab3:
-	bash scripts/grade.sh lab3
+	@bash scripts/grade.sh lab3
 
 gradelab4:
-	bash scripts/grade.sh lab4
+	@bash scripts/grade.sh lab4
 
 gradelab5-1:
-	bash scripts/grade.sh lab5-part1
+	@bash scripts/grade.sh lab5-part1
 
 gradelab5:
-	bash scripts/grade.sh lab5
-
-gradelab6:
-	bash scripts/grade.sh lab6
-
-gradeall:
-	bash scripts/grade.sh all
+	@bash scripts/grade.sh lab5
 
 clean:
-	rm -rf build/ src/tiger/lex/scannerbase.h src/tiger/lex/lex.cc \
-		src/tiger/parse/parserbase.h src/tiger/parse/parse.cc
+	@rm -rf build/
 
 register:
 	python3 scripts/register.py

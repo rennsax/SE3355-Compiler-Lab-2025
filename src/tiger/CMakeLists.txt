@@ -46,6 +46,7 @@ add_executable(test_parse main/test_parse.cc
 target_compile_definitions(test_parse PUBLIC TIGER_NO_BACKEND)
 set_target_properties(test_parse PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
 
+# lab 4
 add_executable(test_semant main/test_semant.cc
   symbol/symbol.cc
   absyn/absyn.cc
@@ -56,3 +57,17 @@ add_executable(test_semant main/test_semant.cc
   ${FLEX_Scanner_OUTPUTS})
 target_link_libraries(test_semant ${llvm_libs})
 set_target_properties(test_semant PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
+
+# lab5 part 1
+add_executable(test_escape_analysis main/test_escape_analysis.cc
+  symbol/symbol.cc
+  absyn/absyn.cc
+  env/env.cc
+  semant/types.cc
+  semant/semant.cc
+  escape/escape.cc
+  ${BISON_Parser_OUTPUTS}
+  ${FLEX_Scanner_OUTPUTS})
+target_compile_definitions(test_escape_analysis PUBLIC TIGER_LAB5_1)
+target_link_libraries(test_escape_analysis ${llvm_libs})
+set_target_properties(test_escape_analysis PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})

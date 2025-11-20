@@ -1,3 +1,3 @@
-# Lab 4: Type Checking
+# Lab 5: Translation
 
-See [Lab 4: Type Checking](https://ipads.se.sjtu.edu.cn/courses/compilers/labs/Type_Checking.html) for details.
+See [Lab 5: Translation](https://ipads.se.sjtu.edu.cn/courses/compilers/labs/Translation.html) for details.
