@@ -1,15 +1,16 @@
 #ifndef TIGER_SEMANT_TYPES_H_
 #define TIGER_SEMANT_TYPES_H_
 
-#include "tiger/symbol/symbol.h"
 #include <list>
+#include <string>
 #include <llvm/IR/Function.h>
 #include <llvm/IR/IRBuilder.h>
 #include <llvm/IR/LLVMContext.h>
 #include <llvm/IR/Module.h>
 #include <llvm/IR/Type.h>
 #include <llvm/IR/Value.h>
-#include <string>
+
+#include "tiger/symbol/symbol.h"
 
 namespace type {
 
@@ -70,9 +71,11 @@ private:
 
 class RecordTy : public Ty {
 public:
+  std::string name_;
   FieldList *fields_;
   llvm::Type *GetLLVMType() override;
-  explicit RecordTy(FieldList *fields) : fields_(fields) { llvm_type_ = NULL; }
+  explicit RecordTy(FieldList *fields);
+  explicit RecordTy(const std::string &name, FieldList *fields);
 
 private:
   llvm::Type *llvm_type_;
@@ -82,7 +85,6 @@ class ArrayTy : public Ty {
 public:
   Ty *ty_;
   llvm::Type *GetLLVMType() override;
-  llvm::Type *GetLLVMTypeWithLen(int len);
   explicit ArrayTy(Ty *ty) : ty_(ty) {}
 };
 

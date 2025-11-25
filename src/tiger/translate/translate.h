@@ -8,12 +8,27 @@
 #include "tiger/env/env.h"
 #include "tiger/errormsg/errormsg.h"
 #include "tiger/frame/frame.h"
-#include "tiger/semant/types.h"
 
 namespace tr {
 
-class Exp;
-class ValAndTy;
+// Function index used by `tr::TigerIntrinsics`.
+enum TigerIntrinsicsName {
+  ALLOC_RECORD,
+  INIT_ARRAY,
+  STRING_EQUAL,
+  TIGER_ALLOCAI,
+  TIGER_READSP,
+  INTRINSICSCNT,
+};
+
+class ValAndTy {
+public:
+  type::Ty *ty_;
+  llvm::Value *val_;
+
+  ValAndTy(llvm::Value *val, type::Ty *ty) : val_(val), ty_(ty) {}
+};
+
 class Level;
 
 class Access {
@@ -23,49 +38,25 @@ public:
 
   Access(Level *level, frame::Access *access)
       : level_(level), access_(access) {}
-  static Access *AllocLocal(Level *level, bool escape);
 };
+
+// Predefined LLVM functions that are used in the Tiger compiler.
+extern std::array<llvm::Function*, INTRINSICSCNT> TigerIntrinsics;
 
 class Level {
 public:
+  Level(frame::Frame *frame, Level *parent) : frame_(frame), parent_(parent) {}
+
+private:
   frame::Frame *frame_;
   Level *parent_;
-  // llvm::Value *sp;
-
-  Level(frame::Frame *frame, Level *parent) : frame_(frame), parent_(parent) {}
-  std::list<tr::Access *> *Formals() {
-    auto facc_list = frame_->Formals();
-    auto tracc_list = new std::list<tr::Access *>();
-
-    for (auto facc : *facc_list)
-      tracc_list->push_back(new tr::Access(this, facc));
-
-    return tracc_list;
-  }
-
-  llvm::Value *get_sp() { return frame_->sp; }
-
-  void set_sp(llvm::Value *sp) { frame_->sp = sp; }
-
-  static Level *NewLevel(Level *parent, temp::Label *name,
-                         std::list<bool> formals) {
-    // Create new frame and manage static link by insert a TRUE into boollist
-    formals.push_back(true);
-    return new Level(frame::NewFrame(name, formals), parent);
-  }
-
-  static Level *NewLevel(Level *parent, std::list<bool> formals) {
-    // Create new frame and manage static link by insert a TRUE into boollist
-    formals.push_back(true);
-    return new Level(frame::NewFrame(nullptr, formals), parent);
-  }
 };
 
 class ProgTr {
 public:
   ProgTr(std::unique_ptr<absyn::AbsynTree> absyn_tree,
-         std::unique_ptr<err::ErrorMsg> errormsg)
-      : absyn_tree_(std::move(absyn_tree)), errormsg_(std::move(errormsg)),
+         err::ErrorMsg *errormsg)
+      : absyn_tree_(std::move(absyn_tree)), errormsg_(errormsg),
         main_level_(std::make_unique<Level>(
             frame::NewFrame(temp::LabelFactory::NamedLabel("tigermain"),
                             std::list<bool>()),
@@ -78,19 +69,11 @@ public:
    */
   void Translate();
 
-  /**
-   * Transfer the ownership of errormsg to outer scope
-   * @return unique pointer to errormsg
-   */
-  std::unique_ptr<err::ErrorMsg> TransferErrormsg() {
-    return std::move(errormsg_);
-  }
-
   void OutputIR(std::string_view filename);
 
 private:
   std::unique_ptr<absyn::AbsynTree> absyn_tree_;
-  std::unique_ptr<err::ErrorMsg> errormsg_;
+  err::ErrorMsg *errormsg_;
   std::unique_ptr<Level> main_level_;
   std::unique_ptr<env::TEnv> tenv_;
   std::unique_ptr<env::VEnv> venv_;

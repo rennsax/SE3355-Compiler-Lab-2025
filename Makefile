@@ -46,8 +46,11 @@ gradelab4:
 gradelab5-1:
 	@bash scripts/grade.sh lab5-part1
 
-gradelab5:
-	@bash scripts/grade.sh lab5
+gradelab5-2:
+	@bash scripts/grade.sh lab5-part2
+
+gradeall:
+	@bash scripts/grade.sh all
 
 clean:
 	@rm -rf build/

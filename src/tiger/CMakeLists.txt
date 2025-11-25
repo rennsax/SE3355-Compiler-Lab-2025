@@ -71,3 +71,23 @@ add_executable(test_escape_analysis main/test_escape_analysis.cc
 target_compile_definitions(test_escape_analysis PUBLIC TIGER_LAB5_1)
 target_link_libraries(test_escape_analysis ${llvm_libs})
 set_target_properties(test_escape_analysis PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
+
+add_library(TigerInstSelectPass SHARED llvm-pass/pass.cc)
+set_target_properties(TigerInstSelectPass PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
+
+# lab 5 part 2
+add_executable(test_translate main/test_translate.cc
+  symbol/symbol.cc
+  absyn/absyn.cc
+  env/env.cc
+  semant/types.cc
+  semant/semant.cc
+  escape/escape.cc
+  translate/translate.cc
+  frame/x64frame.cc
+  frame/temp.cc
+  ${BISON_Parser_OUTPUTS}
+  ${FLEX_Scanner_OUTPUTS})
+target_compile_definitions(test_translate PUBLIC TIGER_LAB5)
+target_link_libraries(test_translate ${llvm_libs})
+set_target_properties(test_translate PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})

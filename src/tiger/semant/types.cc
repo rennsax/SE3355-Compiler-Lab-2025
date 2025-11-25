@@ -10,12 +10,11 @@ IntTy IntTy::intty_;
 StringTy StringTy::stringty_;
 VoidTy VoidTy::voidty_;
 llvm::StructType *StringTy::string_llvm_type_ = nullptr;
-llvm::PointerType *StringTy::string_ptr_llvm_type_ = nullptr;
 
 Ty *Ty::ActualTy() { return this; }
 
 Ty *NameTy::ActualTy() {
-  assert(ty_ != this);
+  assert(ty_ && ty_ != this);
   return ty_->ActualTy();
 }
 
@@ -46,15 +45,14 @@ void StringTy::InitStringLLVMType() {
 
   std::vector<llvm::Type *> structElements = {int32Type, CharsPtrType};
   string_llvm_type_ = llvm::StructType::create(ir_builder->getContext(),
-                                               structElements, "string");
-  string_ptr_llvm_type_ = llvm::PointerType::get(string_llvm_type_, 0);
+                                               structElements, "tiger_string");
 }
 
 llvm::Type *StringTy::GetLLVMType() {
   if (string_llvm_type_ == nullptr) {
     InitStringLLVMType();
   }
-  return string_ptr_llvm_type_;
+  return ir_builder->getPtrTy();
 }
 
 llvm::Value *StringTy::CreateGlobalStringStructPtr(std::string str) {
@@ -83,30 +81,16 @@ llvm::Value *StringTy::CreateGlobalStringStructPtr(std::string str) {
 
 llvm::Type *VoidTy::GetLLVMType() { return ir_builder->getVoidTy(); }
 
+RecordTy::RecordTy(FieldList *fields) : RecordTy::RecordTy("MyStruct", fields) {}
+
+RecordTy::RecordTy(const std::string &name, FieldList *fields) : name_(name), fields_(fields), llvm_type_(nullptr) {}
+
 llvm::Type *RecordTy::GetLLVMType() {
-  if (llvm_type_ == NULL) {
-    llvm::StructType *structType =
-        llvm::StructType::create(ir_builder->getContext(), "MyStruct");
-    llvm_type_ = llvm::PointerType::get(structType, 0);
-
-    std::vector<llvm::Type *> llvm_fields;
-    for (auto field : fields_->GetList()) {
-      llvm_fields.push_back(field->ty_->GetLLVMType());
-    }
-
-    structType->setBody(llvm_fields);
-    llvm_type_ = llvm::PointerType::get(structType, 0);
-  }
-  return llvm_type_;
+  return ir_builder->getPtrTy();
 }
 
 llvm::Type *ArrayTy::GetLLVMType() {
-  // assert(0);
-  return llvm::PointerType::get(ty_->GetLLVMType(), 0);
-}
-
-llvm::Type *ArrayTy::GetLLVMTypeWithLen(int len) {
-  return llvm::ArrayType::get(ty_->GetLLVMType(), len);
+  return ir_builder->getPtrTy();
 }
 
 llvm::Type *NameTy::GetLLVMType() { return ActualTy()->GetLLVMType(); }

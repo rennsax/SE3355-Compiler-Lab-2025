@@ -167,6 +167,77 @@ test_lab5_part1() {
   output_score "5 (PART 1)" 100
 }
 
+# Build an executable file with our "semi-finished" Tiger compiler.
+lab5_build_tig() {
+  local runtime_src="${WORKDIR}/src/tiger/runtime/runtime_llvm.c"
+  local src="$1"
+
+  if [[ -f ./test_translate && -f ./libTigerInstSelectPass.so ]]; then
+    (
+      set -e
+      mkdir -p build_tig
+      ./test_translate "$src" > build_tig/output.1.ll
+      opt -load-pass-plugin=./libTigerInstSelectPass.so \
+          -passes=tiger-pass build_tig/output.1.ll -S -o build_tig/output.2.ll
+      llc --frame-pointer=all build_tig/output.2.ll -o build_tig/output.s
+      clang -fPIC -fno-PIE -no-pie build_tig/output.s "$runtime_src" -o build_tig/output
+    )
+  else
+    error_printf "\`lab5_build_tig' should be run after building \`test_translate' and \`TigerInstSelectPass'!\n"
+    return 1
+  fi
+}
+
+test_lab5_part2() {
+  local testcase_dir=${WORKDIR}/testdata/lab5or6/testcases
+  local ref_dir=${WORKDIR}/testdata/lab5or6/refs
+  local testcase_name
+  declare -i score=0
+
+  build test_translate
+  build TigerInstSelectPass
+  for testcase in "$testcase_dir"/*.tig; do
+    testcase_name=$(basename "$testcase" | cut -f1 -d".")
+    if [ "${testcase_name}" != "merge" ]; then
+      local ref=${ref_dir}/${testcase_name}.out
+
+      lab5_build_tig "${testcase}"
+      if [[ "$?" != 0 ]]; then
+        error_printf "Fail to build testcase \`%s'!\n" "$testcase_name"
+      else
+        ./build_tig/output >/tmp/output.txt
+
+        if ! diff /tmp/output.txt "${ref}"; then
+          error_printf "Fail to pass testcase \`%s': output mismatch!\n" "$testcase_name"
+        else
+          printf "pass %s\n" "$testcase_name"
+          score=$(( score + 5 ))
+        fi
+      fi
+    fi
+  done
+
+  lab5_build_tig "$testcase_dir/merge.tig"
+  if [[ "$?" != 0 ]]; then
+    error_printf "Fail to build testcase \`%s'!\n" "$testcase_name"
+  else
+    for mergecase in "${testcase_dir}"/merge/*.in; do
+      local mergecase_name
+      mergecase_name=$(basename "$mergecase" | cut -f1 -d".")
+      local mergeref="${ref_dir}/merge/${mergecase_name}.out"
+      ./build_tig/output < "$mergecase" >/tmp/output.txt
+      if ! diff /tmp/output.txt "$mergeref"; then
+        error_printf "Fail to pass testcase \`merge/%s'!\n" "$mergecase_name"
+      else
+        printf "pass merge/%s\n" "$mergecase_name"
+        score=$(( score + 5 ))
+      fi
+    done
+  fi
+
+  output_score "5 (PART 2)" "$score"
+}
+
 main() {
   local scope=$1
 
@@ -195,12 +266,9 @@ main() {
   elif [[ $scope == "lab5-part1" ]]; then
     echo "========== Lab5 part-1 Test =========="
     test_lab5_part1
-  elif [[ $scope == "lab5" ]]; then
-    echo "========== Lab5 Test =========="
-    test_lab5
-  elif [[ $scope == "lab6" ]]; then
-    echo "========== Lab6 Test =========="
-    test_lab6
+  elif [[ $scope == "lab5-part2" ]]; then
+    echo "========== Lab5 part-2 Test =========="
+    test_lab5_part2
   elif [[ $scope == "all" ]]; then
     echo "========== Lab1 Test =========="
     test_lab1
@@ -212,15 +280,13 @@ main() {
     test_lab4
     echo "========== Lab5 part-1 Test =========="
     test_lab5_part1
-    echo "========== Lab5 Test =========="
-    test_lab5
-    echo "========== Lab6 Test =========="
-    test_lab6
+    echo "========== Lab5 part-2 Test =========="
+    test_lab5_part2
   else
     echo "Wrong test scope: Please specify the part you want to test"
-    echo -e "\tscripts/grade.sh [lab1|lab2|lab3|lab4|lab5-part1|lab5|lab6|all]"
+    echo -e "\tscripts/grade.sh [lab1|lab2|lab3|lab4|lab5-part1|lab5-part2|all]"
     echo -e "or"
-    echo -e "\tmake [gradelab1|gradelab2|gradelab3|gradelab4|gradelab5|gradelab5-1|gradelab6|gradeall]"
+    echo -e "\tmake [gradelab1|gradelab2|gradelab3|gradelab4|gradelab5-1|gradelab5-2|gradeall]"
   fi
 }
 
