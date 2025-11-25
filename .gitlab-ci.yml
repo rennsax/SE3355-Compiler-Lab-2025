@@ -50,5 +50,6 @@ test_lab5:
     - tiger-compiler
   stage: test_lab5
   script:
-    - git checkout 47fbfb8 -- testdata/ scripts/
+    - git checkout dc6f8cf -- testdata/ scripts/
     - make gradelab5-1
+    - make gradelab5-2
