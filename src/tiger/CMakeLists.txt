@@ -91,3 +91,50 @@ add_executable(test_translate main/test_translate.cc
 target_compile_definitions(test_translate PUBLIC TIGER_LAB5)
 target_link_libraries(test_translate ${llvm_libs})
 set_target_properties(test_translate PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
+
+# lab 6
+add_executable(test_codegen main/test_codegen.cc
+  symbol/symbol.cc
+  absyn/absyn.cc
+  env/env.cc
+  semant/types.cc
+  semant/semant.cc
+  escape/escape.cc
+  translate/translate.cc
+  frame/x64frame.cc
+  frame/temp.cc
+  output/output.cc
+  codegen/codegen.cc
+  codegen/assem.cc
+  ${BISON_Parser_OUTPUTS}
+  ${FLEX_Scanner_OUTPUTS})
+target_compile_definitions(test_codegen PUBLIC TIGER_LAB5)
+target_compile_definitions(test_codegen PUBLIC TIGER_CODEGEN)
+target_link_libraries(test_codegen ${llvm_libs})
+set_target_properties(test_codegen PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
+
+# lab 7
+add_executable(test_ra main/test_ra.cc
+  symbol/symbol.cc
+  absyn/absyn.cc
+  env/env.cc
+  semant/types.cc
+  semant/semant.cc
+  escape/escape.cc
+  translate/translate.cc
+  frame/x64frame.cc
+  frame/temp.cc
+  output/output.cc
+  codegen/codegen.cc
+  codegen/assem.cc
+  regalloc/regalloc.cc
+  regalloc/color.cc
+  liveness/liveness.cc
+  liveness/flowgraph.cc
+  ${BISON_Parser_OUTPUTS}
+  ${FLEX_Scanner_OUTPUTS})
+target_compile_definitions(test_ra PUBLIC TIGER_LAB5)
+target_compile_definitions(test_ra PUBLIC TIGER_CODEGEN)
+target_compile_definitions(test_ra PUBLIC TIGER_RA)
+target_link_libraries(test_ra ${llvm_libs})
+set_target_properties(test_ra PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})

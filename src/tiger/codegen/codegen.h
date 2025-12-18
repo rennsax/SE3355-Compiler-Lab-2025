@@ -3,8 +3,6 @@
 
 #include "tiger/canon/canon.h"
 #include "tiger/codegen/assem.h"
-#include "tiger/frame/x64frame.h"
-#include "tiger/translate/tree.h"
 
 // Forward Declarations
 namespace frame {
@@ -43,16 +41,6 @@ public:
 
   void Codegen();
 
-  // check if the value is %sp in llvm
-  bool IsRsp(llvm::Value *val, std::string_view function_name) const {
-    // TODO: your code here
-    return val->getName().contains("sp");
-  }
-
-  // bb is to add move instruction to record which block it jumps from
-  // function_name can be used to construct return or exit label
-  void InstrSel(assem::InstrList *instr_list, llvm::Instruction &inst,
-                std::string_view function_name, llvm::BasicBlock *bb);
   std::unique_ptr<AssemInstr> TransferAssemInstr() {
     return std::move(assem_instr_);
   }

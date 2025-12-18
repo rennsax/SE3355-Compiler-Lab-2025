@@ -21,8 +21,10 @@ public:
   virtual ~Instr() = default;
 
   virtual void Print(FILE *out, temp::Map *m) const = 0;
+#ifdef TIGER_RA // Def and Use are defined in flowgraph.cc
   [[nodiscard]] virtual temp::TempList *Def() const = 0;
   [[nodiscard]] virtual temp::TempList *Use() const = 0;
+#endif
 };
 
 class OperInstr : public Instr {
@@ -36,8 +38,10 @@ public:
       : assem_(std::move(assem)), dst_(dst), src_(src), jumps_(jumps) {}
 
   void Print(FILE *out, temp::Map *m) const override;
+#ifdef TIGER_RA
   [[nodiscard]] temp::TempList *Def() const override;
   [[nodiscard]] temp::TempList *Use() const override;
+#endif
 };
 
 class LabelInstr : public Instr {
@@ -48,8 +52,10 @@ public:
       : assem_(std::move(assem)), label_(temp::LabelFactory::NamedLabel(assem)) {}
 
   void Print(FILE *out, temp::Map *m) const override;
+#ifdef TIGER_RA
   [[nodiscard]] temp::TempList *Def() const override;
   [[nodiscard]] temp::TempList *Use() const override;
+#endif
 };
 
 class MoveInstr : public Instr {
@@ -61,8 +67,10 @@ public:
       : assem_(std::move(assem)), dst_(dst), src_(src) {}
 
   void Print(FILE *out, temp::Map *m) const override;
+#ifdef TIGER_RA
   [[nodiscard]] temp::TempList *Def() const override;
   [[nodiscard]] temp::TempList *Use() const override;
+#endif
 };
 
 class InstrList {

@@ -125,4 +125,8 @@ frame::Frame *NewFrame(temp::Label *name, std::list<bool> formals) {
   /* TODO: Put your lab5 code here */
 }
 
+#ifdef TIGER_CODEGEN
+/* TODO: put your lab6 code here (implementation of ProcEntryExit{1,2,3}) */
+#endif
+
 } // namespace frame

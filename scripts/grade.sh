@@ -2,6 +2,13 @@
 
 WORKDIR=$(dirname "$(dirname "$(readlink -f "$0")")")
 
+warn_printf() {
+  local fmt="$1"
+  shift
+  # shellcheck disable=SC2059
+  printf "\033[33m$fmt\033[0m" "$@" >&2
+}
+
 error_printf() {
   local fmt="$1"
   shift
@@ -238,6 +245,110 @@ test_lab5_part2() {
   output_score "5 (PART 2)" "$score"
 }
 
+test_lab6() {
+  local testcase_dir=${WORKDIR}/testdata/lab5or6/testcases
+  local ref_dir=${WORKDIR}/testdata/lab5or6/refs
+  local testcase_name
+  declare -i score=0
+
+  build test_codegen
+
+  for testcase in "$testcase_dir"/*.tig; do
+    testcase_name=$(basename "$testcase" | cut -f1 -d".")
+    if [ "${testcase_name}" != "merge" ]; then
+      local ref=${ref_dir}/${testcase_name}.out
+
+      ./test_codegen "${testcase}" > /tmp/output.s
+      if [[ "$?" != 0 ]]; then
+        error_printf "Fail to build testcase \`%s'!\n" "$testcase_name"
+      else
+        python3 "${WORKDIR}/scripts/infinite-register_test/main.py" /tmp/output.s > /tmp/output.txt
+
+        if ! diff /tmp/output.txt "${ref}"; then
+          error_printf "Fail to pass testcase \`%s': output mismatch!\n" "$testcase_name"
+        else
+          printf "pass %s\n" "$testcase_name"
+          score=$(( score + 5 ))
+        fi
+      fi
+    fi
+  done
+
+  ./test_codegen "$testcase_dir/merge.tig" > /tmp/output.s
+  if [[ "$?" != 0 ]]; then
+    error_printf "Fail to build testcase \`%s'!\n" "$testcase_name"
+  else
+    for mergecase in "${testcase_dir}"/merge/*.in; do
+      local mergecase_name
+      mergecase_name=$(basename "$mergecase" | cut -f1 -d".")
+      local mergeref="${ref_dir}/merge/${mergecase_name}.out"
+      python3 "${WORKDIR}/scripts/infinite-register_test/main.py" /tmp/output.s < "$mergecase" > /tmp/output.txt
+      if ! diff /tmp/output.txt "$mergeref"; then
+        error_printf "Fail to pass testcase \`merge/%s'!\n" "$mergecase_name"
+      else
+        printf "pass merge/%s\n" "$mergecase_name"
+        score=$(( score + 5 ))
+      fi
+    done
+  fi
+
+  output_score "6" "$score"
+}
+
+test_lab7() {
+  local testcase_dir=${WORKDIR}/testdata/lab5or6/testcases
+  local ref_dir=${WORKDIR}/testdata/lab5or6/refs
+  local runtime_src="${WORKDIR}/src/tiger/runtime/runtime_llvm.c"
+  local testcase_name
+  declare -i score=0
+
+  build test_ra
+
+  for testcase in "$testcase_dir"/*.tig; do
+    testcase_name=$(basename "$testcase" | cut -f1 -d".")
+    if [ "${testcase_name}" != "merge" ]; then
+      local ref=${ref_dir}/${testcase_name}.out
+
+      ./test_ra "${testcase}" > /tmp/output.s
+      if [[ "$?" != 0 ]]; then
+        error_printf "Fail to build testcase \`%s'!\n" "$testcase_name"
+      else
+        clang -fPIC -fno-PIE -no-pie /tmp/output.s "$runtime_src" -o /tmp/output
+        /tmp/output > /tmp/output.txt
+
+        if ! diff /tmp/output.txt "${ref}"; then
+          error_printf "Fail to pass testcase \`%s': output mismatch!\n" "$testcase_name"
+        else
+          printf "pass %s\n" "$testcase_name"
+          score=$(( score + 5 ))
+        fi
+      fi
+    fi
+  done
+
+  ./test_ra "$testcase_dir/merge.tig" > /tmp/output.s
+  if [[ "$?" != 0 ]]; then
+    error_printf "Fail to build testcase \`%s'!\n" "$testcase_name"
+  else
+    for mergecase in "${testcase_dir}"/merge/*.in; do
+      local mergecase_name
+      mergecase_name=$(basename "$mergecase" | cut -f1 -d".")
+      local mergeref="${ref_dir}/merge/${mergecase_name}.out"
+        clang -fPIC -fno-PIE -no-pie /tmp/output.s "$runtime_src" -o /tmp/output
+        /tmp/output < "$mergecase" > /tmp/output.txt
+
+      if ! diff /tmp/output.txt "$mergeref"; then
+        error_printf "Fail to pass testcase \`merge/%s'!\n" "$mergecase_name"
+      else
+        printf "pass merge/%s\n" "$mergecase_name"
+        score=$(( score + 5 ))
+      fi
+    done
+  fi
+
+  output_score "7" "$score"
+}
+
 main() {
   local scope=$1
 
@@ -247,8 +358,13 @@ main() {
   fi
 
   if [[ ! $(uname -s) == "Linux" ]]; then
-    echo "Error: Please run this grading script in a Linux system"
-    exit 1
+    if [[ $scope == "lab5-part2" || $scope == "all" ]]; then
+      error_printf "error: please running this grading script on GNU/Linux!\n"
+      printf "Lab5-part2 needs to be tested on GNU/Linux.\n"
+      exit 1
+    else
+      warn_printf "warning: consider running this grading script on GNU/Linux.\n"
+    fi
   fi
 
   if [[ $scope == "lab1" ]]; then
@@ -269,6 +385,12 @@ main() {
   elif [[ $scope == "lab5-part2" ]]; then
     echo "========== Lab5 part-2 Test =========="
     test_lab5_part2
+  elif [[ $scope == "lab6" ]]; then
+    echo "========== Lab6 Test =========="
+    test_lab6
+  elif [[ $scope == "lab7" ]]; then
+    echo "========== Lab7 Test =========="
+    test_lab7
   elif [[ $scope == "all" ]]; then
     echo "========== Lab1 Test =========="
     test_lab1
@@ -282,6 +404,7 @@ main() {
     test_lab5_part1
     echo "========== Lab5 part-2 Test =========="
     test_lab5_part2
+    # Do not grade lab 6 or 7 because they are optional.
   else
     echo "Wrong test scope: Please specify the part you want to test"
     echo -e "\tscripts/grade.sh [lab1|lab2|lab3|lab4|lab5-part1|lab5-part2|all]"

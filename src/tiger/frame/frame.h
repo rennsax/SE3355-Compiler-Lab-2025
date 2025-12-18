@@ -95,6 +95,63 @@ public:
 
 frame::Frame *NewFrame(temp::Label *name, std::list<bool> formals);
 
+#ifdef TIGER_CODEGEN
+/**
+ * Fragments
+ */
+
+class Frag {
+public:
+  virtual ~Frag() = default;
+
+  enum OutputPhase {
+    Proc,
+    String,
+  };
+
+  /**
+   *Generate assembly for main program
+   * @param out FILE object for output assembly file
+   */
+  virtual void OutputAssem(FILE *out, OutputPhase phase,
+                           bool need_ra) const = 0;
+};
+
+class StringFrag : public Frag {
+public:
+  llvm::Value *str_val_;
+  std::string str_;
+
+  StringFrag(llvm::Value *str_val, std::string str)
+      : str_val_(str_val), str_(std::move(str)) {}
+
+  void OutputAssem(FILE *out, OutputPhase phase, bool need_ra) const override;
+};
+
+class ProcFrag : public Frag {
+public:
+  llvm::Function *body_;
+
+  ProcFrag(llvm::Function *body) : body_(body) {}
+
+  void OutputAssem(FILE *out, OutputPhase phase, bool need_ra) const override;
+};
+
+class Frags {
+public:
+  Frags() = default;
+  void PushBack(Frag *frag) {
+    frags_.push_back(frag);
+  }
+  const std::list<Frag *> &GetList() { return frags_; }
+
+private:
+  std::list<Frag *> frags_;
+};
+
+/* TODO: put your lab6 code here (declaration of ProcEntryExit{1,2,3}) */
+#endif
+
 } // namespace frame
 
 #endif

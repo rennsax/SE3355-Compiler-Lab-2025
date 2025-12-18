@@ -49,6 +49,12 @@ gradelab5-1:
 gradelab5-2:
 	@bash scripts/grade.sh lab5-part2
 
+gradelab6:
+	@bash scripts/grade.sh lab6
+
+gradelab7:
+	@bash scripts/grade.sh lab7
+
 gradeall:
 	@bash scripts/grade.sh all
 
